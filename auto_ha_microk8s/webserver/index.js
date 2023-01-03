@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
     res.send('Express server for automating HA microk8s rollout.')
 })
 // connection string
-app.get("/connction-string", (req, res) => {
+app.get("/connection-string", (req, res) => {
     const temp = getValue(["connection-string"])
     const arrVal = temp === undefined ? [] : temp
     const conString = arrVal.pop()
@@ -26,7 +26,7 @@ app.put("/connection-string", (req, res) => {
     const temp = getValue(["connection-string"])
     const curr = temp === undefined ? [] : temp
 
-    curr.add(req.body.constring)
+    curr.push(req.body.constring)
     // uniqueIPs.add(req.body.ip)
     // if (uniqueIPs.size > 1)
     setValue(["connection-string"], curr)

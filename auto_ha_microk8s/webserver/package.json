@@ -1,0 +1,19 @@
+{
+  "name": "ha-microk8s-auto-webserver",
+  "version": "0.0.1",
+  "description": "webserver for automatically setting up a HA microk8s cluster",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "alirezaghey",
+  "license": "ISC"
+}

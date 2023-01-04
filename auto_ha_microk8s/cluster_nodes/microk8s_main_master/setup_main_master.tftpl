@@ -25,9 +25,11 @@ echo $(whoami)
 # sudo su - $(whoami)
 
 # add the connections strings to the server
-for i in {1..5}; do
+for i in {1..${num_of_additionalmasters}}; do
   # create the connection string
   CONSTRING=$(microk8s add-node | head -2 | tail -1)
+  echo created "$i" connection string
   # send the conn string to the server
-  curl -X PUT -H "Content-Type: application/json" -d "$(jq -nc --arg constring "$CONSTRING" '{constring: $constring}')" "${WEBSERVER_IP}:${PORT}/connection-string"
+  curl -X PUT -H "Content-Type: application/json" -d "$(jq -nc --arg constring "$CONSTRING" '{constring: $constring}')" "$WEBSERVER_IP":"$PORT"/connection-string
+  echo posted "$i" connection string
 done

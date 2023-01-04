@@ -16,13 +16,22 @@ provider "openstack" {
   use_octavia = "true"
 }
 
+# Set here the number of additional masters for the cluster
+variable num_of_additionalmasters {
+  type        = number
+  default     = 10
+  description = "Sets the number of additional masters in the child modules"
+}
+
 # main master
 module "main_master" {
+  num_of_additionalmasters = var.num_of_additionalmasters
   source = "./microk8s_main_master"
 }
 
 # rest of masters
 module "master" {
+  num_of_additionalmasters = var.num_of_additionalmasters
   source = "./microk8s_master"
 }
 

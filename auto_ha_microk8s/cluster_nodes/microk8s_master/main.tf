@@ -16,6 +16,11 @@ provider "openstack" {
   use_octavia = "true"
 }
 
+variable num_of_additionalmasters {
+  type        = number
+  default     = 5
+  description = "Number of additional masters. Will be set in the parent module."
+}
 
 # rest master setup
 data "openstack_images_image_v2" "osimage_ubuntu" {
@@ -24,7 +29,7 @@ data "openstack_images_image_v2" "osimage_ubuntu" {
 
 
 resource "openstack_compute_instance_v2" "master" {
-  count             = 5
+  count             = var.num_of_additionalmasters
   name              = "tf-az-ubuntu-master-${count.index+1}"
   key_pair          = "az"
   # availability_zone = (count.index % 2 == 0) ? "eu-fra-1" : "eu-fra-2"

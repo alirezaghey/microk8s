@@ -15,6 +15,11 @@ provider "openstack" {
   use_octavia = "true"
 }
 
+variable num_of_additionalmasters {
+  type        = number
+  default     = 5
+  description = "Number of additional masters that will join the main control plane. This number will be set in the parent module and it'll change the setup_main_master script to create the specified number of join tokens."
+}
 
 # main master setup
 data "openstack_images_image_v2" "osimage_ubuntu" {
@@ -29,7 +34,7 @@ resource "openstack_compute_instance_v2" "main-master" {
   availability_zone = "eu-fra-1"
   image_name        = data.openstack_images_image_v2.osimage_ubuntu.name
   flavor_name       = "gen1a-std-2"
-  user_data         = "${file("microk8s_main_master/setup_main_master.sh")}"
+  user_data         = "${templatefile("microk8s_main_master/setup_main_master.tftpl", {num_of_additionalmasters = var.num_of_additionalmasters})}"
 
   block_device {
     boot_index            = 0
